@@ -1,0 +1,45 @@
+Sub GerarNumerosAleatoriosSemRepeticao()
+    Dim numeros() As Variant
+    Dim i As Long
+    Dim novoNumero As Long
+    Dim numMaximo As Long
+    Dim numGerados As Long
+    
+    numMaximo = 100 ' Defina o número máximo desejado
+    numGerados = 10 ' Defina o número de valores desejado
+    
+    ' Redimensiona o array para o número de valores desejado
+    ReDim numeros(1 To numGerados)
+    
+    ' Inicializa o gerador de números aleatórios
+    Randomize
+    
+    ' Loop para gerar os números aleatórios sem repetição
+    For i = 1 To numGerados
+        novoNumero = Int((numMaximo * Rnd) + 1) ' Gera um novo número aleatório
+        
+        ' Verifica se o número já foi gerado anteriormente
+        Do While IsInArray(numeros, novoNumero)
+            novoNumero = Int((numMaximo * Rnd) + 1) ' Gera um novo número aleatório
+        Loop
+        
+        ' Adiciona o número ao array
+        numeros(i) = novoNumero
+    Next i
+    
+    ' Exibe os números gerados
+    For i = 1 To numGerados
+        Debug.Print numeros(i)
+    Next i
+End Sub
+
+Function IsInArray(arr As Variant, val As Variant) As Boolean
+    Dim element As Variant
+    For Each element In arr
+        If element = val Then
+            IsInArray = True
+            Exit Function
+        End If
+    Next element
+    IsInArray = False
+End Function
